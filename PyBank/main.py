@@ -25,10 +25,11 @@ OutputPath = os.path.join("Analysis", "budget_summary.txt")
 with open(InputPath, "r", newline="") as ReadFile:
     DataReader = csv.reader(ReadFile, delimiter=",")
     
-    HeaderRow = next(DataReader) # Skip header row
-    FirstRow = next(DataReader) # Look at first row of data
-
-    # Initialize variables:
+    # Skip header row:
+    HeaderRow = next(DataReader)
+    
+    # Look at first row of data and initialize variables:
+    FirstRow = next(DataReader)
     MonthCount = 1
     MaxMonthlyGain = 0
     MaxMonthlyLoss = 0
@@ -58,10 +59,11 @@ with open(InputPath, "r", newline="") as ReadFile:
             MaxLossMonth = Row[0]
         PreviousMonthProfit = ThisMonthProfit
 
-# Calculate the average of all changes in monthly profits:
-#         = ((R2-R1) + (R3-R2) + (R4-R3) + ... + (R85 - R84) + (R86 - R85) ) / (n-1)
-#         = (R2 - R1 + R3 - R2 + R4 - R3 + ... + R85 - R84 + R86 - R85) / (n-1)
-#         = (R86 - R1) / (n-1)
+# Calculate the average of all changes in monthly profits using this simplification:
+#   AvgChanges = ((Row2-Row1) + (Row3-Row2) + (Row4-Row3) + ... + (Row(n) - Row(n-1))) / (n-1)
+#              = (Row2 - Row1 + Row3 - Row2 + Row4 - Row3 + ... + Row(n) - Row(n-1)) / (n-1)
+#              = (Row2 - Row2 + Row3 - Row3 + Row4 - Row4 + ... + Row(n) - Row1) / (n-1)
+#              = (Row(n) - Row1) / (n-1)
 MeanMonthlyProfitChange = (ThisMonthProfit - FirstMonthProfit) / (MonthCount - 1)
 
 # Output to terminal:
