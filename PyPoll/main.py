@@ -1,86 +1,82 @@
+'''
+Program: 
+   main.py
 
-# Program: 
-#   main.py
-#
-# Written by: 
-#   Ricardo G. Mora, Jr  09/27/2021
-#
-# Description:
-#   This progam reads data from CSV file "budget_data.csv" and calculates
-#   the total number of months of financial data, the overall net profit
-#   or loss, the month with the largest increase in profit from it's
-#   previous month, the month with the largest decrease in profit from it's
-#   previous month, and the average of the monthly changes in profit.
-#   The results are placed into file "budget_summary.txt" and are also
-#   displayed to the console.
+Written by: 
+   Ricardo G. Mora, Jr  09/28/2021
 
+Description:
+   This progam reads data from CSV file "election_data.csv" and counts
+   how many total votes were cast, who the candidates were, and how
+   many votes each received as well as their percent of total votes,
+   and also who the overall winner was.  The results are placed into
+   file "election_summary.txt" and are also displayed to the console.
+'''
 
+# Import modules:
 import os
 import csv
 
-InputPath = os.path.join("Resources", "budget_data.csv")
-OutputPath = os.path.join("Analysis", "budget_summary.txt")
+# Set relative paths to input and output files:
+InputPath = os.path.join("Resources", "election_data.csv")
+OutputPath = os.path.join("Analysis", "election_summary.txt")
+
+# Initialize variables:
+TotalVotes = 0
+MostVotesReceived = 0
+Winner = ""
+ElectionResults = {}  # Dictionary to hold candidate names and their respective vote counts
 
 # Open input file and read into csv reader:
 with open(InputPath, "r", newline="") as ReadFile:
     DataReader = csv.reader(ReadFile, delimiter=",")
-    
-    HeaderRow = next(DataReader) # Skip header row
-    FirstRow = next(DataReader) # Look at first row of data
 
-    # Initialize variables:
-    MonthCount = 1
-    MaxMonthlyGain = 0
-    MaxMonthlyLoss = 0
-    MaxGainMonth = FirstRow[0]
-    MaxLossMonth = FirstRow[0]
-    FirstMonthProfit = int(FirstRow[1])
-    ThisMonthProfit = int(FirstRow[1])
-    PreviousMonthProfit = int(FirstRow[1])
-    NetProfit = int(FirstRow[1])
+    # Skip header row:
+    HeaderRow = next(DataReader)
 
-    # Loop through remaining rows and increment MonthCount and NetProfit:
+    # Loop through remaining rows, increment VoteCount, and extract candidate data:
     for Row in DataReader:
-        MonthCount = MonthCount + 1
-        NetProfit = NetProfit + ThisMonthProfit
+        TotalVotes = TotalVotes + 1
+        Candidate = Row[2]
+
+        # If the candidate is already in ElectionResults, increment his/her vote count
+        # Otherwise, add them to ElectionResults with an initial vote count of 1:
+        if Candidate in ElectionResults.keys():
+            ElectionResults[Candidate] = ElectionResults[Candidate] + 1
+        else:
+            ElectionResults[Candidate] = 1
+
+# Output the results to the terminal:
+print("Election Results")
+print("--------------------------")
+print(f"Total Votes: {TotalVotes:,}")
+print("--------------------------")
+
+# Loop through all the candidates:
+for ThisCandidate, VotesReceived in ElectionResults.items():
+    print(f"{ThisCandidate}: {100 * VotesReceived / TotalVotes :.3f}% ({VotesReceived:,})")
         
-        # Calculate the ChangeInProfit between this month and the previous month:
-        ThisMonthProfit = int(Row[1])
-        ChangeInProfit = ThisMonthProfit - PreviousMonthProfit
+    # Determine who received the most votes:
+    if VotesReceived > MostVotesReceived:
+        MostVotesReceived = VotesReceived
+        Winner = ThisCandidate
 
-        # If the ChangeInProfit is larger than MaxMonthlyGain, make it the new MaxMonthlyGain,
-        # Else if the ChangeInProfit is smaller than  MaxMonthlyLoss, make it the new MaxMonthlyLoss:
-        if ChangeInProfit > MaxMonthlyGain:
-            MaxMonthlyGain = ChangeInProfit
-            MaxGainMonth = Row[0]
-        elif ChangeInProfit < MaxMonthlyLoss:
-            MaxMonthlyLoss = ChangeInProfit
-            MaxLossMonth = Row[0]
-        PreviousMonthProfit = ThisMonthProfit
+print("--------------------------")
+print(f"Winner: {Winner}")
+print("--------------------------")
 
-# Calculate the average of all changes in monthly profits:
-#         = ((R2-R1) + (R3-R2) + (R4-R3) + ... + (R85 - R84) + (R86 - R85) ) / (n-1)
-#         = (R2 - R1 + R3 - R2 + R4 - R3 + ... + R85 - R84 + R86 - R85) / (n-1)
-#         = (R86 - R1) / (n-1)
-MeanMonthlyProfitChange = (ThisMonthProfit - FirstMonthProfit) / (MonthCount - 1)
-
-# Output to terminal:
-print("Financial Analysis")
-print("------------------")
-print(f"Total Months: {MonthCount}")
-print(f"Total: ${NetProfit:,}")
-print(f"Average Change: ${MeanMonthlyProfitChange:,.2f}")
-print(f"Greatest Increase in Profits: {MaxGainMonth} (${MaxMonthlyGain:,})")
-print(f"Greatest Decrease in Profits: {MaxLossMonth} (${MaxMonthlyLoss:,})")
-
-# Open output file and write the results:
+# Output the same results to the output file:
 with open(OutputPath, "w", newline="") as WriteFile:
-    print("Financial Analysis", file=WriteFile)
-    print("------------------", file=WriteFile)
-    print(f"Total Months: {MonthCount}", file=WriteFile)
-    print(f"Total: ${NetProfit:,}",file=WriteFile)
-    print(f"Average Change: ${MeanMonthlyProfitChange:,.2f}", file=WriteFile)
-    print(f"Greatest Increase in Profits: {MaxGainMonth} (${MaxMonthlyGain:,})", file=WriteFile)
-    print(f"Greatest Decrease in Profits: {MaxLossMonth} (${MaxMonthlyLoss:,})", file=WriteFile)
+    print("Election Results", file=WriteFile)
+    print("--------------------------", file=WriteFile)
+    print(f"Total Votes: {TotalVotes:,}", file=WriteFile)
+    print("--------------------------", file=WriteFile)
 
-    
+    # Loop through all the candidates:
+    for ThisCandidate, VotesReceived in ElectionResults.items():
+        print(f"{ThisCandidate}: {100 * VotesReceived / TotalVotes :.3f}% ({VotesReceived:,})", file=WriteFile)
+        
+    print("--------------------------", file=WriteFile)
+    print(f"Winner: {Winner}", file=WriteFile)
+    print("--------------------------", file=WriteFile)
+  
