@@ -1,4 +1,4 @@
-<h1> PyBank and PyPoll <br> (Two examples of simple Python coding) </h1>
+<h1> PyBank and PyPoll <br> (Two examples of using Python to analyze CSV data files.) </h1>
 
 In PyBank, the progam (main.py) reads data from CSV file "budget_data.csv" and calculates
 the total number of months of financial data, the overall net profit
