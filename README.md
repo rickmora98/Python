@@ -1,4 +1,4 @@
-<h1> PyBank and PyPoll <br> (Two examples of Python coding) </h1>
+<h1> PyBank and PyPoll <br> (Two examples of simple Python coding) </h1>
 
 In PyBank, the progam (main.py) reads data from CSV file "budget_data.csv" and calculates
 the total number of months of financial data, the overall net profit
@@ -14,27 +14,22 @@ many votes each received as well as their percent of total votes,
 and also who the overall winner was.  The results are placed into
 file "election_summary.txt" and are also displayed to the console.
 
+To examine the code files and data files, their locations are indicated in the tree below:
 
-Main Folders:
+#### Folders/Files:
 
-"PyBank" contents:
-	"main.py": python script for the profit analysis part of the assignment
-	"Resources": folder containing file "budget_data.csv" (input file)
-	"Analysis": folder containing file "budget_summary.txt" (output file)
+* **"PyBank"** (folder)
+	* *"main.py"* (python script for the profit analysis)
+	* **"Resources"** (subfolder)
+		* *"budget_data.csv"* (input file)
+	* **"Analysis"** (subfolder)
+		* *"budget_summary.txt"* (output file)
+* **"PyPoll"** (folder)
+	* *"main.py"* (python script for the election analysis)
+  	* **"Resources"** (subfolder)
+  		* *"election_data.csv"* (input file)
+	* **"Analysis"** (subfolder)
+		* *"election_summary.txt"* (output file)
 
+(Please do not delete, move, rename, or alter!)
 
-"PyPoll" contents:
-	"main.py" python script for the election analysis part of the assignment.
-  	"Resources": folder containing file"election_data.csv" (input file)
-	"Analysis": folder containing file "election_summary.txt" (output file)
-
-Notes:
-
-The python scripts rely on relative path referencing, therefore the folders "Resources" 
-and "Analysis" should not be deleted, moved, or renamed.  Also, the input files must be
-present in the "Resources" folders and not be renamed.
-If the output files already exist in the "Analysis" folders prior to executing the code,
-they will be replaced by the new output files.
-
-	
- 
