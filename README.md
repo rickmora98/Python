@@ -33,3 +33,6 @@ To examine the code files and data files, their locations are indicated in the t
 
 (Please do not delete, move, rename, or alter!)
 
+#### Snippets of Source Code:
+<img src="Images/PyBankCode.jpg"> <br>
+<img src="Images/PyPollCode.jpg"> <br>
