@@ -1,6 +1,4 @@
-Repository: python-challenge 
 
-This repository contains my solutions to Data Analytics Bootcamp Homework Assignment #3.
 
 Main Folders:
 
@@ -23,5 +21,5 @@ present in the "Resources" folders and not be renamed.
 If the output files already exist in the "Analysis" folders prior to executing the code,
 they will be replaced by the new output files.
 
-Submitted by Ricardo G. Mora, Jr.  09/30/2021	
+	
  
