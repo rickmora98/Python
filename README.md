@@ -1,5 +1,9 @@
 <h1> PyBank and PyPoll <br> (Two examples of using Python to analyze CSV data files.) </h1>
 
+#### Overview:
+This project has two parts: PyBank, which analyzes a fictitious company's financial data,
+and PyPoll, which analyzes the results of a fictitious election.
+
 In PyBank, the progam (main.py) reads data from CSV file "budget_data.csv" and calculates
 the total number of months of financial data, the overall net profit
 or loss, the month with the largest increase in profit from it's
